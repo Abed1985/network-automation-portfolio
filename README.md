@@ -11,6 +11,7 @@ The source material came from retired lab and automation folders. This public ve
 | `cisco-ansible-campus` | Cisco IOS campus lab automation | Show-command collection, config backup, access-switch baseline, security hardening |
 | `network-discovery` | Multi-vendor Ansible discovery and SNMP baseline | Structured CDP/LLDP/ARP parsing, topology edge generation, SNMPv3 IOS/NX-OS examples |
 | `legacy-and-api-automation` | API, legacy firewall, Netmiko, and NAPALM examples | Meraki reporting, ScreenOS SSH automation, CSV inventory rendering, multi-vendor CLI pushes, interface reporting |
+| `fortigate-automation` | FortiGate and FortiManager automation | CSV object generation, config export parsing, BGP/IPsec health parsing, FortiManager/ZTP patterns |
 | `juniper-automation/pyez` | Junos Python automation | Facts, RPCs, XPath, BGP validation, SCP, rescue config, shell access, config diff/rollback, commit confirmed, reboot/software guardrails |
 | `juniper-automation/ansible` | Junos Ansible and Jinja | Facts, command execution, ISIS config rendering, optional commit-confirm deployment |
 
@@ -22,6 +23,7 @@ This repo is designed to show range rather than one narrow workflow:
 - Multi-vendor discovery patterns: Cisco IOS, Cisco NX-OS, Huawei VRP style parsing.
 - Multiple automation styles: Ansible playbooks, Jinja templates, PyEZ Python scripts.
 - API and legacy automation patterns: Meraki Dashboard, ScreenOS/SSG, Netmiko, NAPALM.
+- Firewall automation patterns: FortiGate configuration generation/parsing and FortiManager ZTP orchestration.
 - Operational safety: dry-run defaults, check mode, commit confirmed, explicit confirmation flags.
 - Public-safe hygiene: no real credentials, no raw device outputs, no private URLs, no public-routable lab IPs.
 
@@ -69,6 +71,19 @@ python csv_to_inventory.py sample_devices.csv --output artifacts/generated_inven
 cd ../netmiko_napalm
 python netmiko_config_push.py --hosts 192.0.2.31 --device-type cisco_ios --commands 'logging buffered 64000'
 python napalm_interface_report.py --hosts 192.0.2.31,192.0.2.32 --driver ios
+```
+
+FortiGate automation examples:
+
+```bash
+cd fortigate-automation/object-generation
+python render_address_objects.py --csv sample_addresses.csv
+
+cd ../config-parsing
+python fortigate_config_to_csv.py sample_fortigate.conf --type policy --output artifacts/policies.csv
+
+cd ../operational-health
+python parse_health_outputs.py sample_bgp_summary.txt --type bgp --output artifacts/bgp.csv
 ```
 
 Juniper Ansible examples:
