@@ -1,0 +1,4 @@
+ip_address,mac_address,interface
+192.0.2.10,0011.2233.4455,Vlan10
+192.0.2.11,aa:bb:cc:dd:ee:ff,Vlan20
+192.0.2.12,invalid-mac,Vlan30
