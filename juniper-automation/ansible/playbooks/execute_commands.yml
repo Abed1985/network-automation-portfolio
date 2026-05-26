@@ -1,0 +1,17 @@
+---
+- name: Execute Junos operational commands
+  hosts: junos_lab
+  gather_facts: false
+
+  tasks:
+    - name: Run operational commands
+      junipernetworks.junos.junos_command:
+        commands:
+          - show version
+          - show interfaces terse
+          - show isis adjacency
+      register: command_output
+
+    - name: Show command output
+      ansible.builtin.debug:
+        var: command_output.stdout_lines
