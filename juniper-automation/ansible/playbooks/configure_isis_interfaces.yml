@@ -1,0 +1,32 @@
+---
+- name: Generate and optionally deploy Junos ISIS interface configuration
+  hosts: junos_lab
+  gather_facts: false
+  vars_files:
+    - ../vars/isis_interfaces.yml
+  vars:
+    deploy_changes: false
+
+  tasks:
+    - name: Render ISIS set commands per device
+      ansible.builtin.template:
+        src: ../templates/isis_config.j2
+        dest: "artifacts/isis/{{ inventory_hostname }}_isis_interfaces.conf"
+        mode: "0644"
+      delegate_to: localhost
+      when: inventory_hostname in isis_interfaces
+
+    - name: Preview generated ISIS configuration
+      ansible.builtin.debug:
+        msg: "{{ lookup('file', 'artifacts/isis/' ~ inventory_hostname ~ '_isis_interfaces.conf') }}"
+      when: inventory_hostname in isis_interfaces
+
+    - name: Load ISIS configuration with commit confirmed when enabled
+      junipernetworks.junos.junos_config:
+        src: "artifacts/isis/{{ inventory_hostname }}_isis_interfaces.conf"
+        src_format: set
+        confirm_commit: true
+        comment: "ISIS interface automation demo"
+      when:
+        - deploy_changes | bool
+        - inventory_hostname in isis_interfaces
