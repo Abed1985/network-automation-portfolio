@@ -1,0 +1,6 @@
+ansible>=9.0.0
+junos-eznc>=2.7.0
+jxmlease>=1.0.3
+ncclient>=0.6.15
+PyYAML>=6.0.1
+requests>=2.31.0
