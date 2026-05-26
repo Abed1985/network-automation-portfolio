@@ -16,6 +16,7 @@ These scripts turn the original Juniper lab snippets into reusable portfolio exa
 | `shell_command.py` | StartShell operational checks | `junos_unix_shell.py`, `junos_cli.py`, `verify_image_junos.py` |
 | `reboot_device.py` | Guarded immediate or scheduled reboot | `junos_rebootnow.py`, `junos_rebootlater.py` |
 | `software_install.py` | Validated software install and optional reboot | `junos_sw_install.py` |
+| `lldp_description_audit.py` | Offline LLDP neighbor to interface description comparison | Old `JUNOS-LLDP-DESC-PYEZ` workflow |
 
 ## Safety Model
 
@@ -38,6 +39,7 @@ python config_workflow.py --host 198.51.100.11 --config ../ansible/artifacts/isi
 python rescue_config.py --host 198.51.100.11 get
 python file_transfer.py --host 198.51.100.11 get /var/log/messages ./artifacts/logs --confirm
 python shell_command.py --host 198.51.100.11 "cli -c 'show system storage'" --confirm
+python lldp_description_audit.py --lldp sample_lldp.csv --descriptions sample_descriptions.csv
 ```
 
 Use documentation-range IPs in examples. Replace them only in a local lab inventory or local command line.
