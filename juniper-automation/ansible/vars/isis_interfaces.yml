@@ -1,0 +1,41 @@
+isis_interfaces:
+  core-a:
+    interfaces:
+      - interface: ge-0/0/0
+        inet: 203.0.113.0/31
+      - interface: ge-0/0/1
+        inet: 203.0.113.4/31
+      - interface: lo0
+        inet: 192.0.2.1/32
+        iso: 49.0001.0192.0000.0001.00
+  core-b:
+    interfaces:
+      - interface: ge-0/0/0
+        inet: 203.0.113.1/31
+      - interface: ge-0/0/2
+        inet: 203.0.113.8/31
+      - interface: lo0
+        inet: 192.0.2.2/32
+        iso: 49.0001.0192.0000.0002.00
+  edge-a:
+    interfaces:
+      - interface: ge-0/0/1
+        inet: 203.0.113.5/31
+      - interface: ge-0/0/3
+        inet: 203.0.113.12/31
+      - interface: lo0
+        inet: 192.0.2.11/32
+        iso: 49.0001.0192.0000.0011.00
+  edge-b:
+    interfaces:
+      - interface: ge-0/0/2
+        inet: 203.0.113.9/31
+      - interface: ge-0/0/3
+        inet: 203.0.113.13/31
+      - interface: lo0
+        inet: 192.0.2.12/32
+        iso: 49.0001.0192.0000.0012.00
+
+isis_defaults:
+  level: level-2
+  metric: 10
