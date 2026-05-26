@@ -1,0 +1,19 @@
+---
+- name: Enable Cisco CDP and LLDP discovery protocols
+  hosts: cisco_ios_targets
+  gather_facts: false
+
+  tasks:
+    - name: Enable LLDP globally
+      cisco.ios.ios_config:
+        lines:
+          - lldp run
+
+    - name: Enable CDP globally
+      cisco.ios.ios_config:
+        lines:
+          - cdp run
+
+    - name: Save configuration when changed
+      cisco.ios.ios_config:
+        save_when: modified
