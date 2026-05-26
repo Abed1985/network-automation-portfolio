@@ -19,14 +19,19 @@ This section contains sanitized Juniper automation examples split into two style
 
 ## PyEZ Examples
 
+The `pyez/README.md` file maps the original small lab scripts into a curated recipe gallery. It covers facts, RPCs, XPath extraction, config workflows, interface changes, rescue config, SCP, shell access, reboot, and software install.
+
 ```bash
 cd juniper-automation/pyez
 export JUNOS_USER=netops
 export JUNOS_PASSWORD='example-password'
 python show_version.py --host 198.51.100.11
 python check_bgp_sessions.py --host 198.51.100.11
+python rpc_queries.py --host 198.51.100.11 bgp-summary --xpath './/peer-state'
 python interface_state.py --host 198.51.100.11 ge-0/0/1 disable
 python config_workflow.py --host 198.51.100.11 --config ../ansible/artifacts/isis/core-a_isis_interfaces.conf
+python rescue_config.py --host 198.51.100.11 get
+python file_transfer.py --host 198.51.100.11 get /var/log/messages ./artifacts/logs --confirm
 ```
 
 Risky operations require explicit flags such as `--commit`, `--confirm`, or `--reboot`.
