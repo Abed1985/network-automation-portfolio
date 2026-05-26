@@ -1,0 +1,10 @@
+textfsm_template_dir: "{{ lookup('env', 'NTC_TEMPLATES_DIR') | default('./parsers', true) }}"
+
+snmp_acl_name: DEMO-SNMP
+snmp_allowed_hosts:
+  - 192.0.2.200
+  - 192.0.2.201
+snmp_v3_group: DEMO-READ
+snmp_v3_user: demo-snmp-user
+snmp_v3_auth: "{{ lookup('env', 'SNMPV3_AUTH_PASSWORD') | default('replace-in-lab', true) }}"
+snmp_v3_priv: "{{ lookup('env', 'SNMPV3_PRIV_PASSWORD') | default('replace-in-lab', true) }}"
