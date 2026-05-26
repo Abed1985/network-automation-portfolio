@@ -1,0 +1,21 @@
+campus_dns_servers:
+  - 192.0.2.53
+campus_ntp_servers:
+  - 192.0.2.123
+campus_default_gateway: 192.0.2.1
+campus_vlans:
+  - 10
+  - 20
+  - 30
+  - 40
+  - 50
+access_ports:
+  - interface: GigabitEthernet1/0
+    vlan: 10
+    voice_vlan: 101
+  - interface: GigabitEthernet1/1
+    vlan: 20
+    voice_vlan: 101
+  - interface: GigabitEthernet1/2
+    vlan: 30
+    voice_vlan: 101
