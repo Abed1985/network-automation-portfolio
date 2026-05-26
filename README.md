@@ -9,6 +9,7 @@ The source material came from retired lab and automation folders. This public ve
 | Section | Focus | Highlights |
 | --- | --- | --- |
 | `cisco-ansible-campus` | Cisco IOS campus lab automation | Show-command collection, config backup, access-switch baseline, security hardening |
+| `network-discovery` | Multi-vendor Ansible discovery and SNMP baseline | Structured CDP/LLDP/ARP parsing, topology edge generation, SNMPv3 IOS/NX-OS examples |
 | `juniper-automation/pyez` | Junos Python automation | Facts, RPCs, XPath, BGP validation, SCP, rescue config, shell access, config diff/rollback, commit confirmed, reboot/software guardrails |
 | `juniper-automation/ansible` | Junos Ansible and Jinja | Facts, command execution, ISIS config rendering, optional commit-confirm deployment |
 
@@ -17,6 +18,7 @@ The source material came from retired lab and automation folders. This public ve
 This repo is designed to show range rather than one narrow workflow:
 
 - Multi-vendor automation: Cisco IOS and Junos.
+- Multi-vendor discovery patterns: Cisco IOS, Cisco NX-OS, Huawei VRP style parsing.
 - Multiple automation styles: Ansible playbooks, Jinja templates, PyEZ Python scripts.
 - Operational safety: dry-run defaults, check mode, commit confirmed, explicit confirmation flags.
 - Public-safe hygiene: no real credentials, no raw device outputs, no private URLs, no public-routable lab IPs.
@@ -45,6 +47,15 @@ Cisco examples:
 cd cisco-ansible-campus
 ansible-playbook playbooks/collect_show_version.yml --check
 ansible-playbook playbooks/campus_baseline.yml --check
+```
+
+Network discovery examples:
+
+```bash
+cd network-discovery
+ansible-playbook playbooks/collect_lldp_structured.yml
+ansible-playbook playbooks/configure_snmpv3_ios.yml --check
+python parsers/build_topology_edges.py artifacts/lldp --output artifacts/topology_edges.csv
 ```
 
 Juniper Ansible examples:
