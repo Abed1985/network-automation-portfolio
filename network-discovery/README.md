@@ -12,6 +12,7 @@ The public version keeps the reusable techniques and removes customer names, log
 - SNMPv3 baseline configuration for IOS and NX-OS with ACL scoping.
 - `no_log: true` on tasks that render SNMP secrets.
 - Post-processing parsed neighbor JSON into a topology edge list.
+- Enriching ARP tables with normalized MAC addresses, OUI values, and vendor names.
 
 ## Playbooks
 
@@ -47,9 +48,18 @@ Build a simple topology edge list from collected neighbor JSON:
 python parsers/build_topology_edges.py artifacts/lldp --output artifacts/topology_edges.csv
 ```
 
+Enrich an ARP CSV with MAC vendor/OUI details:
+
+```bash
+python parsers/enrich_arp_vendors.py sample_arp.csv --output artifacts/arp_enriched.csv --offline
+```
+
+Remove `--offline` in a lab with Internet access to query `api.macvendors.com`; results are cached in `artifacts/oui_cache.csv`.
+
 ## Sanitization Notes
 
 - Inventory IPs use documentation ranges only.
 - SNMP hosts use `192.0.2.200` and `192.0.2.201` examples.
 - SNMPv3 auth/privacy values come from environment variables.
 - Raw customer config exports, logs, and `.retry` files are intentionally excluded.
+- ARP vendor enrichment uses sanitized sample IP/MAC data and keeps API lookups optional.
