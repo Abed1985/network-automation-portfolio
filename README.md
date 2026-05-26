@@ -10,6 +10,7 @@ The source material came from retired lab and automation folders. This public ve
 | --- | --- | --- |
 | `cisco-ansible-campus` | Cisco IOS campus lab automation | Show-command collection, config backup, access-switch baseline, security hardening |
 | `network-discovery` | Multi-vendor Ansible discovery and SNMP baseline | Structured CDP/LLDP/ARP parsing, topology edge generation, SNMPv3 IOS/NX-OS examples |
+| `legacy-and-api-automation` | API, legacy firewall, Netmiko, and NAPALM examples | Meraki reporting, ScreenOS SSH automation, CSV inventory rendering, multi-vendor CLI pushes, interface reporting |
 | `juniper-automation/pyez` | Junos Python automation | Facts, RPCs, XPath, BGP validation, SCP, rescue config, shell access, config diff/rollback, commit confirmed, reboot/software guardrails |
 | `juniper-automation/ansible` | Junos Ansible and Jinja | Facts, command execution, ISIS config rendering, optional commit-confirm deployment |
 
@@ -20,6 +21,7 @@ This repo is designed to show range rather than one narrow workflow:
 - Multi-vendor automation: Cisco IOS and Junos.
 - Multi-vendor discovery patterns: Cisco IOS, Cisco NX-OS, Huawei VRP style parsing.
 - Multiple automation styles: Ansible playbooks, Jinja templates, PyEZ Python scripts.
+- API and legacy automation patterns: Meraki Dashboard, ScreenOS/SSG, Netmiko, NAPALM.
 - Operational safety: dry-run defaults, check mode, commit confirmed, explicit confirmation flags.
 - Public-safe hygiene: no real credentials, no raw device outputs, no private URLs, no public-routable lab IPs.
 
@@ -56,6 +58,17 @@ cd network-discovery
 ansible-playbook playbooks/collect_lldp_structured.yml
 ansible-playbook playbooks/configure_snmpv3_ios.yml --check
 python parsers/build_topology_edges.py artifacts/lldp --output artifacts/topology_edges.csv
+```
+
+Legacy and API automation examples:
+
+```bash
+cd legacy-and-api-automation/onboarding
+python csv_to_inventory.py sample_devices.csv --output artifacts/generated_inventory.yml
+
+cd ../netmiko_napalm
+python netmiko_config_push.py --hosts 192.0.2.31 --device-type cisco_ios --commands 'logging buffered 64000'
+python napalm_interface_report.py --hosts 192.0.2.31,192.0.2.32 --driver ios
 ```
 
 Juniper Ansible examples:
