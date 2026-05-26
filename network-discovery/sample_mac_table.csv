@@ -1,0 +1,5 @@
+device,port,mac_address
+access-switch-1,Gi1/0/1,00:11:22:33:44:55
+access-switch-1,Gi1/0/1,00:11:22:33:44:56
+access-switch-1,Gi1/0/1,00:11:22:33:44:57
+access-switch-1,Gi1/0/2,00:11:22:33:44:58
