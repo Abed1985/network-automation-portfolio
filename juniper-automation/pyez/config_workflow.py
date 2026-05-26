@@ -11,6 +11,7 @@ def parse_args():
     parser.add_argument("--config", help="Path to a Junos set/text config file")
     parser.add_argument("--format", default="set", choices=["set", "text", "xml", "json"], help="Candidate config format")
     parser.add_argument("--commit", action="store_true", help="Commit after showing the diff")
+    parser.add_argument("--sync", action="store_true", help="Use synchronized commit on dual-routing-engine systems")
     parser.add_argument("--confirm-minutes", type=int, default=5, help="Use commit confirmed for this many minutes")
     parser.add_argument("--rollback", type=int, help="Rollback ID to load instead of a config file")
     return parser.parse_args()
@@ -36,7 +37,7 @@ def main():
             if args.commit:
                 # Commit confirmed protects the device: if the change is not confirmed later,
                 # Junos automatically rolls it back after the timer expires.
-                config.commit(confirm=args.confirm_minutes)
+                config.commit(confirm=args.confirm_minutes, sync=args.sync)
                 print(f"Commit confirmed for {args.confirm_minutes} minutes")
             else:
                 config.rollback()
