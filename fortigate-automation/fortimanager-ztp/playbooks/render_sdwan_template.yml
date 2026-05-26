@@ -1,0 +1,22 @@
+---
+- name: Render generic FortiGate SD-WAN overlay template
+  hosts: localhost
+  gather_facts: false
+  vars:
+    local_asn: 65010
+    sdwan_members:
+      - interface: wan1
+        gateway: 192.0.2.1
+      - interface: wan2
+        gateway: 198.51.100.1
+    bgp_neighbors:
+      - ip: 203.0.113.1
+        remote_asn: 65000
+        update_source: loopback.0
+
+  tasks:
+    - name: Render SD-WAN/BGP CLI template
+      ansible.builtin.template:
+        src: ../templates/spoke_sdwan_overlay.conf.j2
+        dest: artifacts/spoke_sdwan_overlay.conf
+        mode: "0644"
