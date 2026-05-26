@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Ansible runtime
+*.retry
+facts.d/
+artifacts/
+output*/
+*.log
+
+# Local secrets
+.env
+vault.yml
+*.key
+*.pem
+
+# OS/editor
+.DS_Store
+.vscode/
