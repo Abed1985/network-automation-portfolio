@@ -1,0 +1,25 @@
+---
+- name: Collect Cisco CDP neighbors as structured data
+  hosts: cisco_ios_targets
+  gather_facts: false
+  vars_files:
+    - ../inventory/group_vars.yml
+
+  tasks:
+    - name: Run show cdp neighbors through TextFSM parser
+      ansible.utils.cli_parse:
+        command: show cdp neighbors
+        parser:
+          name: ansible.netcommon.ntc_templates
+      register: cdp_neighbors
+
+    - name: Save CDP neighbor JSON per device
+      ansible.builtin.copy:
+        content: "{{ cdp_neighbors.parsed | to_nice_json }}"
+        dest: "artifacts/cdp/{{ inventory_hostname }}.json"
+        mode: "0644"
+      delegate_to: localhost
+
+    - name: Show concise neighbor summary
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }} has {{ cdp_neighbors.parsed | length }} CDP neighbors"
