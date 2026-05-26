@@ -1,0 +1,26 @@
+---
+- name: Configure SNMPv3 baseline on Cisco IOS devices
+  hosts: cisco_ios_targets
+  gather_facts: false
+  vars_files:
+    - ../inventory/group_vars.yml
+
+  tasks:
+    - name: Build SNMP ACL from sanitized variable list
+      cisco.ios.ios_config:
+        parents: "ip access-list standard {{ snmp_acl_name }}"
+        lines: "permit {{ item }}"
+        before: "no ip access-list standard {{ snmp_acl_name }}"
+      loop: "{{ snmp_allowed_hosts }}"
+
+    - name: Configure SNMPv3 view, group, and user
+      cisco.ios.ios_config:
+        lines:
+          - snmp-server view DEMO-VIEW iso included
+          - "snmp-server group {{ snmp_v3_group }} v3 priv read DEMO-VIEW access {{ snmp_acl_name }}"
+          - "snmp-server user {{ snmp_v3_user }} {{ snmp_v3_group }} v3 auth sha {{ snmp_v3_auth }} priv aes 128 {{ snmp_v3_priv }} access {{ snmp_acl_name }}"
+      no_log: true
+
+    - name: Save configuration when changed
+      cisco.ios.ios_config:
+        save_when: modified
