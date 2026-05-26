@@ -1,0 +1,24 @@
+---
+- name: Create FortiManager firewall address objects
+  hosts: fortimanager
+  gather_facts: false
+  vars:
+    firewall_addresses:
+      - name: demo-branch-lan
+        subnet: 192.0.2.0/24
+        comment: Example branch LAN
+      - name: demo-cloud-service
+        subnet: 203.0.113.50/32
+        comment: Example cloud service
+
+  tasks:
+    - name: Create firewall addresses in customer ADOM
+      fortinet.fortimanager.fmgr_firewall_address:
+        adom: "{{ customer_adom }}"
+        state: present
+        firewall_address:
+          name: "{{ item.name }}"
+          type: ipmask
+          subnet: "{{ item.subnet }}"
+          comment: "{{ item.comment }}"
+      loop: "{{ firewall_addresses }}"
