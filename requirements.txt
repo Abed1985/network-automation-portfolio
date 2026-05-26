@@ -4,3 +4,6 @@ jxmlease>=1.0.3
 ncclient>=0.6.15
 PyYAML>=6.0.1
 requests>=2.31.0
+paramiko>=3.4.0
+netmiko>=4.3.0
+napalm>=5.0.0
