@@ -1,0 +1,9 @@
+{
+  "TACPLUS": {
+    "global": {
+      "auth_type": "login",
+      "passkey": "old-demo-key",
+      "timeout": "5"
+    }
+  }
+}
