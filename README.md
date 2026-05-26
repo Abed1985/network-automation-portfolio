@@ -10,7 +10,7 @@ The source material came from retired lab and automation folders. This public ve
 | --- | --- | --- |
 | `cisco-ansible-campus` | Cisco IOS campus lab automation | Show-command collection, config backup, access-switch baseline, security hardening |
 | `network-discovery` | Multi-vendor Ansible discovery and SNMP baseline | Structured CDP/LLDP/ARP parsing, topology edge generation, ARP vendor enrichment, SNMPv3 IOS/NX-OS examples |
-| `legacy-and-api-automation` | API, legacy firewall, Netmiko, and NAPALM examples | Meraki reporting, ScreenOS SSH automation, CSV inventory rendering, multi-vendor CLI pushes, interface reporting |
+| `legacy-and-api-automation` | API, legacy firewall, Netmiko, NAPALM, and remediation examples | Meraki reporting, ScreenOS SSH automation, CSV inventory rendering, multi-vendor CLI pushes, interface reporting, IOS/SONiC remediation logic |
 | `fortigate-automation` | FortiGate and FortiManager automation | CSV object generation, config export parsing, BGP/IPsec health parsing, FortiManager/ZTP patterns |
 | `juniper-automation/pyez` | Junos Python automation | Facts, RPCs, XPath, BGP validation, SCP, rescue config, shell access, config diff/rollback, commit confirmed, reboot/software guardrails |
 | `juniper-automation/ansible` | Junos Ansible and Jinja | Facts, command execution, ISIS config rendering, optional commit-confirm deployment |
@@ -72,6 +72,10 @@ python csv_to_inventory.py sample_devices.csv --output artifacts/generated_inven
 cd ../netmiko_napalm
 python netmiko_config_push.py --hosts 192.0.2.31 --device-type cisco_ios --commands 'logging buffered 64000'
 python napalm_interface_report.py --hosts 192.0.2.31,192.0.2.32 --driver ios
+
+cd ../remediation
+python ios_local_user_cleanup.py --candidate sample_candidate_users.cfg --running sample_running_users.cfg
+python sonic_tacacs_sync.py --show-tacacs sample_show_tacacs.txt --json sample_tacacs.json
 ```
 
 FortiGate automation examples:
